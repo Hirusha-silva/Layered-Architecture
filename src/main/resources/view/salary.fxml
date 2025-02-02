@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="556.0" prefWidth="638.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.mrphone.controller.SalaryController">
+   <children>
+      <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="219.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/image/Mr. Phone With Background.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="30.0" layoutY="107.0" text="Salary Id : ">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="355.0" layoutY="107.0" text="Employee Id :">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="161.0" text="Amount :">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="355.0" layoutY="161.0" text="Date :">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblSId" layoutX="116.0" layoutY="107.0" prefHeight="22.0" prefWidth="160.0" style="-fx-border-color: #1e272e; -fx-border-width: 0 0 1px 0;">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblEId" layoutX="464.0" layoutY="107.0" prefHeight="22.0" prefWidth="160.0" style="-fx-border-color: #1e272e; -fx-border-width: 0 0 1px 0;">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDate" layoutX="409.0" layoutY="161.0" prefHeight="22.0" prefWidth="160.0" style="-fx-border-color: #1e272e; -fx-border-width: 0 0 1px 0;">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtAmount" layoutX="102.0" layoutY="160.0" prefHeight="26.0" prefWidth="227.0" style="-fx-border-color: #1e272e; -fx-border-width: 0 0 1px 0; -fx-background-color: transparent;" />
+      <TableView fx:id="tblSalary" layoutX="66.0" layoutY="278.0" onMouseClicked="#SalaryOnMouseClick" prefHeight="200.0" prefWidth="507.0">
+        <columns>
+          <TableColumn fx:id="clmSId" prefWidth="123.0" text="Salary Id " />
+          <TableColumn fx:id="clmEId" prefWidth="118.0" text="Employee Id " />
+            <TableColumn fx:id="clmAmount" prefWidth="126.0" text="Amount" />
+            <TableColumn fx:id="clmDate" prefWidth="139.0" text="Date" />
+        </columns>
+      </TableView>
+      <Label layoutX="262.0" layoutY="14.0" text="Salary">
+         <font>
+            <Font name="Charm Bold" size="29.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnSave" layoutX="497.0" layoutY="490.0" mnemonicParsing="false" onAction="#SaveOnAction" prefHeight="52.0" prefWidth="95.0" style="-fx-background-radius: 30; -fx-background-color: #2ecc71;" text="Save" textFill="WHITE">
+         <font>
+            <Font name="Baloo Paaji 2 ExtraBold" size="16.0" />
+         </font></Button>
+      <Button fx:id="btnUpdate" layoutX="420.0" layoutY="209.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="83.0" style="-fx-background-radius: 30; -fx-background-color: #f1c40f;" text="Update" textFill="WHITE">
+         <font>
+            <Font name="Baloo Paaji 2 ExtraBold" size="16.0" />
+         </font></Button>
+      <Button fx:id="btnDelete" layoutX="561.0" layoutY="206.0" mnemonicParsing="false" onAction="#DeleteOnAction" prefHeight="52.0" prefWidth="53.0" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/icons8-delete-60.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="btnReset" layoutX="506.0" layoutY="209.0" mnemonicParsing="false" onAction="#ResetOnAction" prefHeight="46.0" prefWidth="49.0" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/icons8-reset-50.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+   </children>
+</AnchorPane>

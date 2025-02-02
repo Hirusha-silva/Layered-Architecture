@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootNode" minHeight="658.0" minWidth="820.0" prefHeight="658.0" prefWidth="956.0" style="-fx-background-color: #34495e;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.mrphone.controller.DashboardFormController">
+   <children>
+      <AnchorPane fx:id="root" layoutY="2.0" prefHeight="658.0" prefWidth="182.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="2.0">
+         <children>
+            <Button fx:id="btnCustomer" layoutY="212.0" mnemonicParsing="false" onAction="#btnCustomerOnAction" prefHeight="39.0" prefWidth="182.0" style="-fx-background-color: #1e272e; -fx-border-color: #ecf0f1; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20;" text="Customer" textFill="WHITE">
+               <font>
+                  <Font size="19.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <ImageView fitHeight="185.0" fitWidth="182.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/image/Mr. Phone With Background.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnItem" layoutY="263.0" mnemonicParsing="false" onAction="#btnItemOnAction" prefHeight="39.0" prefWidth="182.0" style="-fx-background-color: #1e272e; -fx-border-color: #ecf0f1; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20;" text="Item" textFill="WHITE">
+               <font>
+                  <Font size="19.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="btnOrder" layoutY="313.0" mnemonicParsing="false" onAction="#btnOrderOnAction" prefHeight="39.0" prefWidth="182.0" style="-fx-background-color: #1e272e; -fx-border-color: #ecf0f1; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20;" text="Order" textFill="WHITE">
+               <font>
+                  <Font size="19.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fitHeight="31.0" fitWidth="49.0" layoutX="14.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/icons8-customer-48.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnEmployee" layoutY="364.0" mnemonicParsing="false" onAction="#btnEmployeeOnAction" prefHeight="39.0" prefWidth="182.0" style="-fx-background-color: #1e272e; -fx-border-color: #ecf0f1; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20;" text="Employee" textFill="WHITE">
+               <font>
+                  <Font size="19.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="btnSupplier" layoutY="416.0" mnemonicParsing="false" onAction="#btnSupplierOnAction" prefHeight="39.0" prefWidth="182.0" style="-fx-background-color: #1e272e; -fx-border-color: #ecf0f1; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20;" text="Supplier" textFill="WHITE">
+               <font>
+                  <Font size="19.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="btnRepairing" layoutY="467.0" mnemonicParsing="false" onAction="#btnRepairOnAction" prefHeight="39.0" prefWidth="182.0" style="-fx-background-color: #1e272e; -fx-border-color: #ecf0f1; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20;" text="Repairing" textFill="WHITE">
+               <font>
+                  <Font size="19.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="16.0" layoutY="264.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/icons8-item-50(1).png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="17.0" layoutY="316.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/icons8-order-48.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="12.0" layoutY="366.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/icons8-staff-48.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="15.0" layoutY="418.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/icons8-supplier-48.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="12.0" layoutY="471.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/icons8-settings-94.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="node" layoutX="182.0" prefHeight="658.0" prefWidth="779.0" style="-fx-background-color: #ecf0f1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="182.0" AnchorPane.rightAnchor="-5.0" AnchorPane.topAnchor="0.0" />
+   </children>
+</AnchorPane>
