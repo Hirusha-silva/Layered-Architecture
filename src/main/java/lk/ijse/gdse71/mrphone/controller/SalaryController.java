@@ -6,9 +6,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import lk.ijse.gdse71.mrphone.dto.ItemDto;
+import lk.ijse.gdse71.mrphone.BO.BOFactory;
+import lk.ijse.gdse71.mrphone.BO.custom.SalaryBO;
+import lk.ijse.gdse71.mrphone.BO.custom.impl.SalaryBOImpl;
 import lk.ijse.gdse71.mrphone.dto.SalaryDto;
-import lk.ijse.gdse71.mrphone.model.SalaryModel;
+import lk.ijse.gdse71.mrphone.dao.custom.impl.SalaryDAOImpl;
 import lombok.Setter;
 
 import java.net.URL;
@@ -74,7 +76,7 @@ public class SalaryController implements Initializable {
     void SalaryOnMouseClick(MouseEvent event) {
 
     }
-
+     private final SalaryBO salaryBO = (SalaryBO) BOFactory.getInstance().getBO(BOFactory.BOType.SALARY);
     @FXML
     void SaveOnAction(ActionEvent event) {
         String salaryId = lblSId.getText();
@@ -89,9 +91,10 @@ public class SalaryController implements Initializable {
         }
         double salary = Double.parseDouble(salarytext);
 
-        SalaryDto salaryDto = new SalaryDto(salaryId,orderId,salary,date);
+//        SalaryDto salaryDto = new SalaryDto(salaryId,orderId,salary,date);
+
         try {
-            boolean isSave = SalaryModel.save(salaryDto);
+            boolean isSave = salaryBO.save(new SalaryDto(salaryId,orderId,salary,date));
             if (isSave){
                 //refreshPage();
                 new Alert(Alert.AlertType.INFORMATION,"Salary Saved").show();
@@ -104,6 +107,7 @@ public class SalaryController implements Initializable {
     }
 
     public void setEmpolyeeId(String empolyeeId) {
+
         lblEId.setText(empolyeeId);
     }
 
@@ -116,9 +120,9 @@ public class SalaryController implements Initializable {
 
     }
 
-        SalaryModel salaryModel = new SalaryModel();
+        SalaryDAOImpl salaryDAOImpl = new SalaryDAOImpl();
     private void loadNextSalaryId() throws Exception {
-        String nextSalaryID = salaryModel.getNextSalaryId();
+        String nextSalaryID = salaryBO.getNextId();
         lblSId.setText(nextSalaryID);
     }
     private void refreshPage() throws Exception {

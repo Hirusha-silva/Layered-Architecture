@@ -1,16 +1,15 @@
-package lk.ijse.gdse71.mrphone.model;
+package lk.ijse.gdse71.mrphone.dao.custom.impl;
 
-import lk.ijse.gdse71.mrphone.dto.ItemDto;
+import lk.ijse.gdse71.mrphone.dao.custom.SalaryDAO;
 import lk.ijse.gdse71.mrphone.dto.SalaryDto;
 import lk.ijse.gdse71.mrphone.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-public class SalaryModel {
-    public String getNextSalaryId() throws SQLException, SQLException, ClassNotFoundException {
+public class SalaryDAOImpl implements SalaryDAO {
+    public String getNextId() throws SQLException, SQLException, ClassNotFoundException {
         ResultSet rst = CrudUtil.execute("select salary_id  from salary order by salary_id desc limit 1");
 
         if (rst.next()) {
@@ -22,7 +21,7 @@ public class SalaryModel {
         }
         return "S001";
     }
-    public static boolean save(SalaryDto salaryDto) throws SQLException, ClassNotFoundException {
+    public  boolean save(SalaryDto salaryDto) throws SQLException, ClassNotFoundException {
         boolean isSaved = CrudUtil.execute(
                 "insert into salary values(?,?,?,?,?)",
                 salaryDto.getSalary_id(),
@@ -32,6 +31,21 @@ public class SalaryModel {
 
         );
         return isSaved;
+    }
+
+    @Override
+    public List<SalaryDto> getAll() throws SQLException, ClassNotFoundException {
+        return List.of();
+    }
+
+    @Override
+    public boolean delete(String customerId) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean update(SalaryDto customerDto) throws SQLException, ClassNotFoundException {
+        return false;
     }
 //    public static List<ItemDto> getAll() throws SQLException, ClassNotFoundException {
 //        ResultSet resultSet = CrudUtil.execute("select * from item");
