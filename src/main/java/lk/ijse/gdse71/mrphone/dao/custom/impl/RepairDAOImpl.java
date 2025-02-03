@@ -1,8 +1,7 @@
-package lk.ijse.gdse71.mrphone.model;
+package lk.ijse.gdse71.mrphone.dao.custom.impl;
 
-import lk.ijse.gdse71.mrphone.dto.CustomerDto;
+import lk.ijse.gdse71.mrphone.dao.custom.RepairDAO;
 import lk.ijse.gdse71.mrphone.dto.RepairDto;
-import lk.ijse.gdse71.mrphone.dto.SupplierDto;
 import lk.ijse.gdse71.mrphone.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -10,8 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepairModel {
-    public String getNextReparingId() throws SQLException, ClassNotFoundException {
+public class RepairDAOImpl implements RepairDAO {
+    public String getNextId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("select repairing_id from repairing order by repairing_id desc limit 1");
 
         if (resultSet.next()) {
@@ -24,7 +23,7 @@ public class RepairModel {
         }
         return "R001";
     }
-    public static List<RepairDto> getAll() throws SQLException, ClassNotFoundException {
+    public  List<RepairDto> getAll() throws SQLException, ClassNotFoundException {
 
 
         ResultSet resultSet = CrudUtil.execute("select * from repairing");
@@ -41,7 +40,7 @@ public class RepairModel {
         }
         return repairDtos;
     }
-    public static boolean save(RepairDto repairDto) throws SQLException, ClassNotFoundException {
+    public  boolean save(RepairDto repairDto) throws SQLException, ClassNotFoundException {
 
         boolean isSaved = CrudUtil.execute(
                 "insert into repairing values(?,?,?,?,?)",
@@ -54,7 +53,7 @@ public class RepairModel {
         return isSaved;
     }
 
-    public boolean updateRepair(RepairDto repairDto) throws SQLException, ClassNotFoundException {
+    public boolean update(RepairDto repairDto) throws SQLException, ClassNotFoundException {
 
 
         return CrudUtil.execute(
@@ -68,7 +67,7 @@ public class RepairModel {
         );
 
     }
-    public boolean deleteReparing(String reparing_id) throws SQLException, ClassNotFoundException {
+    public boolean delete(String reparing_id) throws SQLException, ClassNotFoundException {
 
         return CrudUtil.execute("delete from repairing where repairing_id=?", reparing_id);
     }

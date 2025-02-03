@@ -1,9 +1,6 @@
 package lk.ijse.gdse71.mrphone.BO;
 
-import lk.ijse.gdse71.mrphone.BO.custom.impl.CustomerBOimpl;
-import lk.ijse.gdse71.mrphone.BO.custom.impl.EmployeeBOimpl;
-import lk.ijse.gdse71.mrphone.BO.custom.impl.ItemBOImpl;
-import lk.ijse.gdse71.mrphone.BO.custom.impl.ItemDetailBOImpl;
+import lk.ijse.gdse71.mrphone.BO.custom.impl.*;
 import lk.ijse.gdse71.mrphone.dao.SuperDAO;
 import lk.ijse.gdse71.mrphone.dao.custom.impl.CustomerDAOImpl;
 
@@ -15,7 +12,7 @@ public class BOFactory {
         return boFactory ==null? boFactory =new BOFactory(): boFactory;
     }
     public enum BOType{
-        CUSTOMER,ITEM,ITEMDETAIL,EMPLOYEE;
+        CUSTOMER,ITEM,ITEMDETAIL,EMPLOYEE,REPAIR;
     }
     public SuperBO getBO(BOType type){
         switch (type) {
@@ -27,6 +24,8 @@ public class BOFactory {
                         return new ItemDetailBOImpl();
                         case EMPLOYEE:
                             return new EmployeeBOimpl();
+                            case REPAIR:
+                                return new RepairBOImpl();
             default:
                 return null;
         }

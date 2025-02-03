@@ -1,9 +1,6 @@
 package lk.ijse.gdse71.mrphone.dao;
 
-import lk.ijse.gdse71.mrphone.dao.custom.impl.CustomerDAOImpl;
-import lk.ijse.gdse71.mrphone.dao.custom.impl.EmployeeDAOImpl;
-import lk.ijse.gdse71.mrphone.dao.custom.impl.ItemDAOImpl;
-import lk.ijse.gdse71.mrphone.dao.custom.impl.ItemDetailDAOImpl;
+import lk.ijse.gdse71.mrphone.dao.custom.impl.*;
 
 public class DAOFactory {
     private static DAOFactory daoFactory;
@@ -13,7 +10,7 @@ public class DAOFactory {
         return daoFactory==null?daoFactory=new DAOFactory():daoFactory;
     }
     public enum DAOType{
-        CUSTOMER,ITEM,ITEMDETAIL,EMPLOYEE
+        CUSTOMER,ITEM,ITEMDETAIL,EMPLOYEE,REPAIR
     }
     public SuperDAO getDAO(DAOType type){
         switch (type) {
@@ -25,6 +22,8 @@ public class DAOFactory {
                         return (SuperDAO) new ItemDetailDAOImpl();
                         case EMPLOYEE:
                             return new EmployeeDAOImpl();
+                            case REPAIR:
+                                return new RepairDAOImpl();
                 default:
                     return null;
         }

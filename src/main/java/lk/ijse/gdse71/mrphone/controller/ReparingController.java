@@ -8,9 +8,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import lk.ijse.gdse71.mrphone.BO.BOFactory;
+import lk.ijse.gdse71.mrphone.BO.custom.RepairBO;
+import lk.ijse.gdse71.mrphone.BO.custom.impl.RepairBOImpl;
 import lk.ijse.gdse71.mrphone.dto.RepairDto;
 import lk.ijse.gdse71.mrphone.dto.tm.RepairTm;
-import lk.ijse.gdse71.mrphone.model.RepairModel;
+import lk.ijse.gdse71.mrphone.dao.custom.impl.RepairDAOImpl;
 
 
 import java.net.URL;
@@ -81,6 +84,7 @@ public class ReparingController implements Initializable {
         }
     }
 
+    private final RepairBO repairBO = (RepairBO) BOFactory.getInstance().getBO(BOFactory.BOType.REPAIR);
     @FXML
     void DeleteOnAction(ActionEvent event) throws Exception {
         String reparing_id = lblReparing.getText();
@@ -89,7 +93,7 @@ public class ReparingController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
-            boolean isDeleted = repairModel.deleteReparing(reparing_id);
+            boolean isDeleted = repairBO.delete(reparing_id);
             if (isDeleted) {
 
                 new Alert(Alert.AlertType.INFORMATION,"Reparing deleted successfully").show();
@@ -118,7 +122,7 @@ public class ReparingController implements Initializable {
 
         RepairDto repairDto = new RepairDto(repairing_id,customer_id,description,date,status);
         try {
-            boolean isSaved = RepairModel.save(repairDto);
+            boolean isSaved = repairBO.save(repairDto);
             if (isSaved) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Reparing has been saved successfully").show();
@@ -139,7 +143,7 @@ public class ReparingController implements Initializable {
         String status = txtStatus.getText();
 
         RepairDto repairDto = new RepairDto(repairing_id,customer_id,description,date,status);
-        boolean isUpdate = repairModel.updateRepair(repairDto);
+        boolean isUpdate = repairBO.update(repairDto);
         if (isUpdate) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Repair has been updated successfully").show();
@@ -168,11 +172,11 @@ public class ReparingController implements Initializable {
             new Alert(Alert.AlertType.ERROR,"Failed to refresh page").show();
         }
     }
-    RepairModel repairModel = new RepairModel();
+
 
     private void refreshPage() throws Exception {
         lblDate.setText(LocalDate.now().toString());
-        lblReparing.setText(repairModel.getNextReparingId());
+        lblReparing.setText(repairBO.getNextId());
 
         loadAllReparing();
 
@@ -185,7 +189,7 @@ public class ReparingController implements Initializable {
     private void loadAllReparing() {
         ObservableList<RepairTm> obList = FXCollections.observableArrayList();
         try {
-            List<RepairDto> repairDtoList = RepairModel.getAll();
+            List<RepairDto> repairDtoList = repairBO.getAll();
             for (RepairDto repairDto : repairDtoList) {
                 RepairTm repairTm= new RepairTm(
                         repairDto.getRepairing_id(),

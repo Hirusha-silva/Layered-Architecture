@@ -11,6 +11,7 @@ import java.util.List;
 
 
 public class CustomerDAOImpl implements CustomerDAO {
+
     public String getNextId() throws SQLException, ClassNotFoundException {
 //        Connection connection = DBConnection.getInstance().getConnection();
 //        String sql = "select customer_id from customer order by customer_id desc limit 1";
