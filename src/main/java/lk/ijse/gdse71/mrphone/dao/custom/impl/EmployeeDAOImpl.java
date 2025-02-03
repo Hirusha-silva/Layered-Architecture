@@ -1,5 +1,6 @@
-package lk.ijse.gdse71.mrphone.model;
+package lk.ijse.gdse71.mrphone.dao.custom.impl;
 
+import lk.ijse.gdse71.mrphone.dao.custom.EmployeeDAO;
 import lk.ijse.gdse71.mrphone.dto.EmployeeDto;
 import lk.ijse.gdse71.mrphone.util.CrudUtil;
 
@@ -8,8 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeModel {
-    public static boolean save(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
+public class EmployeeDAOImpl implements EmployeeDAO {
+    public  boolean save(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
         boolean isSaved = CrudUtil.execute("insert into employee values(?,?,?,?)",
                 employeeDto.getEmployee_id(),
                 employeeDto.getName(),
@@ -18,7 +19,7 @@ public class EmployeeModel {
                 );
         return isSaved;
     }
-    public String getNextEmployeeId() throws SQLException, ClassNotFoundException {
+    public String getNextId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("select employee_id from employee order by employee_id desc limit 1");
         if (resultSet.next()) {
             String lastEmployeeId = resultSet.getString(1);
@@ -29,7 +30,7 @@ public class EmployeeModel {
         }
         return "E001";
     }
-    public static List<EmployeeDto> getAllEmployees() throws SQLException, ClassNotFoundException {
+    public  List<EmployeeDto> getAll() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("select * from employee");
         List<EmployeeDto> employeeDtos = new ArrayList<>();
         while (resultSet.next()) {
@@ -43,11 +44,11 @@ public class EmployeeModel {
         }
         return employeeDtos;
     }
-    public boolean deleteEmployee(String employeeId) throws SQLException, ClassNotFoundException {
+    public boolean delete(String employeeId) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("delete from employee where employee_id=?", employeeId);
     }
 
-    public boolean updateEmployee(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
+    public boolean update(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("update employee set name=? , phone_no=? , address=? where employee_id=?",
                 employeeDto.getName(),
                 employeeDto.getPhone_no(),

@@ -136,7 +136,7 @@ public class CustomerController  {
         loadAllCustomer();
     }
    // CustomerModel customerModel = new CustomerModel();
-    CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOType.CUSTOMER);
+    private final CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOType.CUSTOMER);
     public void loadNextCustomer() throws SQLException, ClassNotFoundException {
         String nextCustomerId = customerBO.getNextId();
         lblCustomerId.setText(nextCustomerId);
@@ -228,9 +228,9 @@ public class CustomerController  {
             return;
         }
 
-        CustomerDto customerDto = new CustomerDto(customer_Id, name, phone_no, email);
+        //CustomerDto customerDto = new CustomerDto(customer_Id, name, phone_no, email);
         try {
-            boolean isSaved = customerBO.save(customerDto);
+            boolean isSaved = customerBO.save(new CustomerDto(customer_Id,name,phone_no,email));
             if (isSaved) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Customer has been saved successfully").show();
@@ -265,8 +265,8 @@ public class CustomerController  {
             return;
         }
 
-        CustomerDto customerDto = new CustomerDto(customer_id, name, phone_no, email);
-        boolean isUpdate = customerBO.update(customerDto);
+       // CustomerDto customerDto = new CustomerDto(customer_id, name, phone_no, email);
+        boolean isUpdate = customerBO.update(new CustomerDto(customer_id,name,phone_no,email));
         if (isUpdate) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Customer has been updated successfully").show();

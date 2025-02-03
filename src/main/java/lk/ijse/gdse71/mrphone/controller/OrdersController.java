@@ -165,8 +165,12 @@ public class OrdersController implements Initializable {
     void cmbCustomerOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String selectedCustomerId = cmbCustomerId.getSelectionModel().getSelectedItem();
         CustomerDto customerDto = (CustomerDto) BOFactory.getInstance().getBO(BOFactory.BOType.CUSTOMER);
+        //CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOType.CUSTOMER);
 
-
+        if (selectedCustomerId == null ) {
+            new Alert(Alert.AlertType.ERROR,"Please select a customer !").show();
+            return;
+        }
         if(customerDto != null){
             lblCustomerName.setText(customerDto.getName());
         }

@@ -12,9 +12,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lk.ijse.gdse71.mrphone.BO.BOFactory;
+import lk.ijse.gdse71.mrphone.BO.custom.EmployeeBO;
 import lk.ijse.gdse71.mrphone.dto.EmployeeDto;
 import lk.ijse.gdse71.mrphone.dto.tm.EmployeeTm;
-import lk.ijse.gdse71.mrphone.model.EmployeeModel;
+import lk.ijse.gdse71.mrphone.dao.custom.impl.EmployeeDAOImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -71,11 +73,12 @@ public class EmployeeController {
     void deleteOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String employee_id = lblEmployeeId.getText();
 
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure",ButtonType.YES,ButtonType.NO);
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
-            boolean isDeleted = employeeModel.deleteEmployee(employee_id);
+            boolean isDeleted = employeeBO.delete(employee_id);
             if (isDeleted) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION,"Customer deleted successfully").show();
@@ -117,9 +120,9 @@ public class EmployeeController {
             return;
         }
 
-        EmployeeDto employeeDto = new EmployeeDto(employeeId, name, phone_no, address);
+       // EmployeeDto employeeDto = new EmployeeDto(employeeId,name,phone_no,address);
         try {
-            boolean isSaved = EmployeeModel.save(employeeDto);
+            boolean isSaved = employeeBO.save(new EmployeeDto(employeeId,name,phone_no,address));
             if (isSaved) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Employee has been saved successfully").show();
@@ -146,8 +149,8 @@ public class EmployeeController {
             return;
         }
 
-        EmployeeDto employeeDto = new EmployeeDto(employee_id, name, phone_no, address);
-        boolean isUpdate = employeeModel.updateEmployee(employeeDto);
+       // EmployeeDto employeeDto = new EmployeeDto(employee_id, name, phone_no, address);
+        boolean isUpdate = employeeBO.update(new EmployeeDto(employee_id,name,phone_no,address));
         if (isUpdate) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Employee has been updated successfully").show();
@@ -205,16 +208,17 @@ public class EmployeeController {
         txtPhone.clear();
         txtAddress.clear();
     }
-    EmployeeModel employeeModel = new EmployeeModel();
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getInstance().getBO(BOFactory.BOType.EMPLOYEE);
     public void loadNextEmployee() throws SQLException, ClassNotFoundException {
-        String nextEmployee = employeeModel.getNextEmployeeId();
+        String nextEmployee = employeeBO.getNextId();
         lblEmployeeId.setText(nextEmployee);
 
     }
+
     public void loadAllEmployee() throws SQLException, ClassNotFoundException {
         ObservableList<EmployeeTm> observableList = FXCollections.observableArrayList();
         try {
-            List<EmployeeDto> employeeDtoList = EmployeeModel.getAllEmployees();
+            List<EmployeeDto> employeeDtoList = employeeBO.getAll();
             for (EmployeeDto employeeDto : employeeDtoList) {
                 EmployeeTm employeeTm = new EmployeeTm(
                         employeeDto.getEmployee_id(),

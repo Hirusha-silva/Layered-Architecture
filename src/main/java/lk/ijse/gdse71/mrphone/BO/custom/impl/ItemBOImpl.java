@@ -5,6 +5,7 @@ import lk.ijse.gdse71.mrphone.dao.DAOFactory;
 import lk.ijse.gdse71.mrphone.dao.custom.ItemDAO;
 import lk.ijse.gdse71.mrphone.dto.ItemDto;
 import lk.ijse.gdse71.mrphone.dto.OrderDetailDto;
+import lk.ijse.gdse71.mrphone.entity.Item;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,7 +16,18 @@ public class ItemBOImpl implements ItemBO {
 
     @Override
     public List<ItemDto> getAll() throws SQLException, ClassNotFoundException {
-        return itemDAO.getAll();
+        List<ItemDto> items = new ArrayList<>();
+        List<ItemDto> itemList = itemDAO.getAll();
+        for (ItemDto item : itemList) {
+            items.add(new ItemDto(
+                    item.getItem_id(),
+                    item.getPrice(),
+                    item.getBrand(),
+                    item.getQty(),
+                    item.getDescription()
+                    ));
+        }
+        return items;
     }
 
     @Override
@@ -39,9 +51,9 @@ public class ItemBOImpl implements ItemBO {
         return itemDAO.update(new ItemDto(
                 itemDto.getItem_id(),
                 itemDto.getPrice(),
-                itemDto.getDescription(),
+                itemDto.getBrand(),
                 itemDto.getQty(),
-                itemDto.getBrand()
+                itemDto.getDescription()
                 ));
     }
 

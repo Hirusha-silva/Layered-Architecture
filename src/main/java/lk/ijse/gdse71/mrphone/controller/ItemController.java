@@ -7,6 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import lk.ijse.gdse71.mrphone.BO.BOFactory;
+import lk.ijse.gdse71.mrphone.BO.custom.ItemBO;
+import lk.ijse.gdse71.mrphone.BO.custom.impl.ItemBOImpl;
 import lk.ijse.gdse71.mrphone.dao.custom.ItemDAO;
 import lk.ijse.gdse71.mrphone.dao.custom.impl.ItemDAOImpl;
 import lk.ijse.gdse71.mrphone.dao.custom.impl.ItemDetailDAOImpl;
@@ -78,11 +81,12 @@ public class ItemController {
 
     }
 
-    ItemDAOImpl itemDAOImpl = new ItemDAOImpl();
+    private final ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBO(BOFactory.BOType.ITEM);
+//    ItemDAOImpl itemDAOImpl = new ItemDAOImpl();
     ItemDetailDAOImpl itemDetailDAOImpl = new ItemDetailDAOImpl();
 
     public void loadNextItem() throws SQLException, ClassNotFoundException {
-        String nextItemId = itemDAOImpl.getNextId();
+        String nextItemId = itemBO.getNextId();
         lblItem.setText(nextItemId);
     }
 
@@ -122,7 +126,7 @@ public class ItemController {
     public void loadAllItem() throws  ClassNotFoundException {
         ObservableList<ItemTm> obList = FXCollections.observableArrayList();
         try{
-            List<ItemDto> itemDtoList = itemDAOImpl.getAll();
+            List<ItemDto> itemDtoList = itemBO.getAll();
             for (ItemDto itemDto : itemDtoList) {
                 ItemTm itemTm = new ItemTm(
                   itemDto.getItem_id(),
@@ -148,7 +152,7 @@ public class ItemController {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
-            boolean isDeleted = itemDAOImpl.delete(item_id);
+            boolean isDeleted = itemBO.delete(item_id);
             if (isDeleted) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION,"Item deleted").show();
@@ -210,11 +214,11 @@ public class ItemController {
 //            return;
 //        }
 
-        ItemDto itemDto = new ItemDto(item_id, price, brand, qty, description);
-        ItemDetailDto itemDetailDto = new ItemDetailDto(item_id, inventory_id);
+       // ItemDto itemDto = new ItemDto(item_id, price, brand, qty, description);
+        //ItemDetailDto itemDetailDto = new ItemDetailDto(item_id, inventory_id);
         try {
-            boolean isSavedI = itemDAOImpl.save(itemDto);
-            boolean isSavedID = itemDetailDAOImpl.saveItem(itemDetailDto);
+            boolean isSavedI = itemBO.save(new ItemDto(item_id, price, brand, qty, description));
+            boolean isSavedID = itemDetailDAOImpl.saveItem(new ItemDetailDto(item_id, inventory_id));
 
             if (isSavedI && isSavedID) {
                 refreshPage();
@@ -247,10 +251,11 @@ public class ItemController {
             new Alert(Alert.AlertType.ERROR,"Invalid brand").show();
             txtBrand.requestFocus();
             return;
-        }else if (!qtyText.matches("^\\\\d+$")){
-            new Alert(Alert.AlertType.ERROR,"Invalid qty").show();
-            txtQty.requestFocus();
-            return;
+
+//        }else if (!qtyText.matches("^\\\\d+$")){
+//            new Alert(Alert.AlertType.ERROR,"Invalid qty").show();
+//            txtQty.requestFocus();
+//            return;
         }
          int qty = Integer.parseInt(qtyText);
          //else if (!description.matches("^(?s).*?[a-zA-Z]+.*$")){
@@ -259,11 +264,11 @@ public class ItemController {
 //            return;
 //        }
 
-        ItemDto itemDto = new ItemDto(item_id, price, brand, qty, description);
-        ItemDetailDto itemDetailDto = new ItemDetailDto(item_id, inventory_id);
+       // ItemDto itemDto = new ItemDto(item_id, price, brand, qty, description);
+       // ItemDetailDto itemDetailDto = new ItemDetailDto(item_id, inventory_id);
 
-        boolean isUpdateI = itemDAOImpl.update(itemDto);
-        boolean isUpdateID = itemDetailDAOImpl.updateItem(itemDetailDto);
+        boolean isUpdateI = itemBO.update(new ItemDto(item_id, price, brand, qty, description));
+        boolean isUpdateID = itemDetailDAOImpl.updateItem(new ItemDetailDto(item_id, inventory_id));
 
         if (isUpdateI && isUpdateID) {
             refreshPage();
