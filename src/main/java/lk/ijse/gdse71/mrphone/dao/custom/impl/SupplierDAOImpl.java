@@ -1,32 +1,31 @@
-package lk.ijse.gdse71.mrphone.model;
+package lk.ijse.gdse71.mrphone.dao.custom.impl;
 
-import lk.ijse.gdse71.mrphone.db.DBConnection;
+import lk.ijse.gdse71.mrphone.dao.custom.SupplierDAO;
 import lk.ijse.gdse71.mrphone.dto.*;
+import lk.ijse.gdse71.mrphone.entity.Supplier;
 import lk.ijse.gdse71.mrphone.util.CrudUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierModel {
+public class SupplierDAOImpl implements SupplierDAO {
 
 
-    public static boolean save(SupplierDto supplierDto) throws SQLException, ClassNotFoundException {
+    public  boolean save(Supplier entity) throws SQLException, ClassNotFoundException {
 
         boolean isSaved = CrudUtil.execute(
                 "insert into supplier values(?,?,?,?)",
-                supplierDto.getSupplier_id(),
-                supplierDto.getName(),
-                supplierDto.getPhone_no(),
-                supplierDto.getCompany()
+                entity.getSupplier_id(),
+                entity.getName(),
+                entity.getPhone_no(),
+                entity.getCompany()
         );
         return isSaved;
     }
 
-    public String nextSupplierId() throws SQLException, ClassNotFoundException {
+    public String getNextId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("select supplier_id from supplier order by supplier_id desc limit 1");
 
         if (resultSet.next()) {
@@ -39,18 +38,18 @@ public class SupplierModel {
         return "S001";
     }
 
-    public List<SupplierDto> getAllSuppliers() throws SQLException, ClassNotFoundException {
+    public List<Supplier> getAll() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("select * from supplier");
-        ArrayList<SupplierDto> list = new ArrayList<>();
+        ArrayList<Supplier> list = new ArrayList<>();
         while (resultSet.next()) {
-            SupplierDto supplierDto = new SupplierDto(
+            Supplier suppliers = new Supplier(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
                     resultSet.getString(4)
 
             );
-            list.add(supplierDto);
+            list.add(suppliers);
         }
         return list;
     }
@@ -65,21 +64,21 @@ public class SupplierModel {
 //    }
 //    return supplierIdList;
 //}
-public boolean updateSupplier(SupplierDto supplierDto) throws SQLException, ClassNotFoundException {
+public boolean update(Supplier entity) throws SQLException, ClassNotFoundException {
 
 
     return CrudUtil.execute(
             "Update supplier set name=?,phone_no=?,company=? where supplier_id=?",
-            supplierDto.getName(),
-            supplierDto.getPhone_no(),
-            supplierDto.getCompany(),
-            supplierDto.getSupplier_id()
+            entity.getName(),
+            entity.getPhone_no(),
+            entity.getCompany(),
+            entity.getSupplier_id()
 
 
     );
 
 }
-    public boolean deleteSupplier(String supplierId) throws SQLException, ClassNotFoundException {
+    public boolean delete(String supplierId) throws SQLException, ClassNotFoundException {
 
         return CrudUtil.execute("delete from supplier where supplier_id=?", supplierId);
     }

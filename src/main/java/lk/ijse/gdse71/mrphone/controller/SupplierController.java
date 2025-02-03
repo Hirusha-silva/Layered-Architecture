@@ -9,12 +9,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.gdse71.mrphone.dto.SupplierAndSupplierDetailDto;
-import lk.ijse.gdse71.mrphone.dto.SupplierDetailDto;
+import lk.ijse.gdse71.mrphone.BO.BOFactory;
+import lk.ijse.gdse71.mrphone.BO.custom.SupplierBO;
+import lk.ijse.gdse71.mrphone.BO.custom.impl.SupplierBOImpl;
 import lk.ijse.gdse71.mrphone.dto.SupplierDto;
 import lk.ijse.gdse71.mrphone.dto.tm.SupplierTm;
+import lk.ijse.gdse71.mrphone.entity.Supplier;
 import lk.ijse.gdse71.mrphone.model.SupplierDetailModel;
-import lk.ijse.gdse71.mrphone.model.SupplierModel;
+import lk.ijse.gdse71.mrphone.dao.custom.impl.SupplierDAOImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -90,7 +92,7 @@ public class SupplierController implements Initializable {
     private TextField txtPhone;
 
 
-
+     SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUPPLIER);
     @FXML
     void supplierMouseClick(MouseEvent event) {
         SupplierTm supplierTm = tblSupplier.getSelectionModel().getSelectedItem();
@@ -112,7 +114,7 @@ public class SupplierController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
-            boolean isDeleted = supplierModel.deleteSupplier(supplier_id);
+            boolean isDeleted = supplierBO.delete(supplier_id);
             if (isDeleted) {
 
                 new Alert(Alert.AlertType.INFORMATION,"Supplier deleted successfully").show();
@@ -128,7 +130,7 @@ public class SupplierController implements Initializable {
         refreshPage();
 
     }
-    SupplierModel supplierModel = new SupplierModel();
+    //SupplierDAOImpl supplierDAOImpl = new SupplierDAOImpl();
     SupplierDetailModel supplierDetailModel = new SupplierDetailModel();
 
 
@@ -154,11 +156,11 @@ public class SupplierController implements Initializable {
 
 
 
-        SupplierModel supplierModel = new SupplierModel();
-        SupplierDto supplierDto = new SupplierDto(supplier_id, name, phone_no, company);
+//        SupplierDAOImpl supplierDAOImpl = new SupplierDAOImpl();
+//        SupplierDto supplierDto = new SupplierDto(supplier_id, name, phone_no, company);
 
         try {
-            boolean isSaved = supplierModel.save(supplierDto);
+            boolean isSaved = supplierBO.save(new Supplier(supplier_id,name,phone_no,company));
 
             if (isSaved) {
                 refreshPage();
@@ -183,8 +185,8 @@ public class SupplierController implements Initializable {
     private void loadTableData() {
         ObservableList<SupplierTm> oblist = FXCollections.observableArrayList();
         try {
-            List<SupplierDto> supplierDtos = supplierModel.getAllSuppliers();
-            for (SupplierDto supplierDto: supplierDtos) {
+            List<Supplier> suppliers = supplierBO.getAll();
+            for (Supplier supplierDto: suppliers) {
                 SupplierTm supplierTm = new SupplierTm(
                         supplierDto.getSupplier_id(),
                         supplierDto.getName(),
@@ -203,7 +205,7 @@ public class SupplierController implements Initializable {
 
 
     private void loadNextSupplierId() throws SQLException, ClassNotFoundException {
-        String nextSupplierId = supplierModel.nextSupplierId();
+        String nextSupplierId = supplierBO.getNextId();
         lblSupplierId.setText(nextSupplierId);
     }
 
@@ -226,8 +228,8 @@ public class SupplierController implements Initializable {
             txtPhone.requestFocus();
             return;
         }
-        SupplierDto supplierDto = new SupplierDto(supplier_id, name, phone_no, company);
-        boolean isUpdated = supplierModel.updateSupplier(supplierDto);
+
+        boolean isUpdated = supplierBO.update(new Supplier(supplier_id,name,phone_no,company));
         if (isUpdated) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Supplier has been updated successfully").show();

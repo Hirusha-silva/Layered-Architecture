@@ -13,5 +13,5 @@ public interface ItemDAO extends CrudDAO<ItemDto> {
      // List<ItemDto> getAll() throws SQLException, ClassNotFoundException;
       boolean reduceQty(OrderDetailDto orderDetailDto) throws SQLException, ClassNotFoundException;
       ArrayList<String> getAllItemId() throws SQLException, ClassNotFoundException;
-    ItemDto findById(String selectedItemId) throws SQLException, ClassNotFoundException;
+      ItemDto findById(String selectedItemId) throws SQLException, ClassNotFoundException;
 }
