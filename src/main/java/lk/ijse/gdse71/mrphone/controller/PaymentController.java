@@ -8,11 +8,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import lk.ijse.gdse71.mrphone.BO.BOFactory;
+import lk.ijse.gdse71.mrphone.BO.custom.PaymentBO;
 import lk.ijse.gdse71.mrphone.db.DBConnection;
 import lk.ijse.gdse71.mrphone.dto.PaymentDto;
-import lk.ijse.gdse71.mrphone.dto.tm.CustomerTm;
 import lk.ijse.gdse71.mrphone.dto.tm.PaymentTm;
-import lk.ijse.gdse71.mrphone.model.PaymentModel;
+import lk.ijse.gdse71.mrphone.dao.custom.impl.PaymentDAOImpl;
 import lombok.Setter;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
@@ -70,6 +71,8 @@ public class PaymentController implements Initializable {
 
     }
 
+    private final PaymentBO paymentBO = (PaymentBO) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
+
     @FXML
     void invoiceOnAction(ActionEvent event) {
         PaymentTm paymentTm = tblPayment.getSelectionModel().getSelectedItem();
@@ -122,7 +125,7 @@ public class PaymentController implements Initializable {
         if (isValid) {
             PaymentDto paymentDto = new PaymentDto(paymentId, orderId,  amount,paymentMethod);
 
-            boolean isSaved = paymentModel.savePayment(paymentDto);
+            boolean isSaved = paymentBO.save(paymentDto);
             if (isSaved) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Payment saved...!").show();
@@ -159,10 +162,10 @@ public class PaymentController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Failed to load Data!").show();
         }
     }
-    PaymentModel paymentModel = new PaymentModel();
+    PaymentDAOImpl paymentDAOImpl = new PaymentDAOImpl();
 
     private void loadNextPaymentId() throws Exception {
-        String nextPaymentId = paymentModel.getNextPaymentId();
+        String nextPaymentId = paymentBO.getNextId();
         lblPaymentId.setText(nextPaymentId);
     }
 
@@ -171,7 +174,7 @@ public class PaymentController implements Initializable {
         loadNextPaymentId();
     }
     private void loadTableData() throws Exception {
-        ArrayList<PaymentDto> paymentDtos = paymentModel.getAllPayments();
+        ArrayList<PaymentDto> paymentDtos = paymentBO.getAll();
 
         ObservableList<PaymentTm> paymentTms = FXCollections.observableArrayList();
 

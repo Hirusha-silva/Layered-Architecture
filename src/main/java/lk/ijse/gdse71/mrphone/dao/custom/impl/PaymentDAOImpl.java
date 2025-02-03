@@ -1,14 +1,16 @@
-package lk.ijse.gdse71.mrphone.model;
+package lk.ijse.gdse71.mrphone.dao.custom.impl;
 
+import lk.ijse.gdse71.mrphone.dao.custom.PayementDAO;
 import lk.ijse.gdse71.mrphone.dto.PaymentDto;
 import lk.ijse.gdse71.mrphone.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
-public class PaymentModel {
-    public String getNextPaymentId() throws SQLException, SQLException, ClassNotFoundException {
+public class PaymentDAOImpl implements PayementDAO {
+    public String getNextId() throws SQLException, SQLException, ClassNotFoundException {
         ResultSet rst = CrudUtil.execute("select pay_id from payment order by pay_id  desc limit 1");
 
         if (rst.next()) {
@@ -20,7 +22,19 @@ public class PaymentModel {
         }
         return "P001";
     }
-    public ArrayList<PaymentDto> getAllPayments() throws SQLException, ClassNotFoundException {
+
+    @Override
+    public boolean delete(String customerId) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean update(PaymentDto customerDto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+
+    public ArrayList<PaymentDto> getAll() throws SQLException, ClassNotFoundException {
         ResultSet rst = CrudUtil.execute("select * from payment");
 
         ArrayList<PaymentDto> paymentDtos = new ArrayList<>();
@@ -31,7 +45,7 @@ public class PaymentModel {
         }
         return paymentDtos;
     }
-    public boolean savePayment(PaymentDto paymentDto) throws SQLException, ClassNotFoundException {
+    public boolean save(PaymentDto paymentDto) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("insert into payment values(?, ?, ?, ?)", paymentDto.getPay_id(), paymentDto.getOrder_id(), paymentDto.getAmount(), paymentDto.getMethod());
     }
 }
