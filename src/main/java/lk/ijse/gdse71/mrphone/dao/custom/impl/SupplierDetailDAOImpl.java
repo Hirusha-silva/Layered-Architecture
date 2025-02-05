@@ -1,8 +1,10 @@
-package lk.ijse.gdse71.mrphone.model;
+package lk.ijse.gdse71.mrphone.dao.custom.impl;
 
+import lk.ijse.gdse71.mrphone.dao.custom.SupplierDetailDAO;
 import lk.ijse.gdse71.mrphone.dto.SupplierAndSupplierDetailDto;
 import lk.ijse.gdse71.mrphone.dto.SupplierDetailDto;
-import lk.ijse.gdse71.mrphone.dto.SupplierDto;
+import lk.ijse.gdse71.mrphone.entity.SupplierAndSupplierDetail;
+import lk.ijse.gdse71.mrphone.entity.SupplierDetail;
 import lk.ijse.gdse71.mrphone.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -10,8 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierDetailModel {
-    public static boolean save(SupplierDetailDto supplierDetailDto) throws SQLException, ClassNotFoundException {
+public class SupplierDetailDAOImpl implements SupplierDetailDAO {
+    public  boolean save(SupplierDetailDto supplierDetailDto) throws SQLException, ClassNotFoundException {
 
         boolean isSaved = CrudUtil.execute(
                 "insert into supplierDetail values(?,?,?,?,?)",
@@ -23,11 +25,24 @@ public class SupplierDetailModel {
         );
         return isSaved;
     }
-    public List<SupplierAndSupplierDetailDto> getAllSuppliers() throws SQLException, ClassNotFoundException {
+
+    @Override
+    public String getNextId() throws SQLException, ClassNotFoundException {
+        return "";
+    }
+
+    @Override
+    public boolean save(SupplierAndSupplierDetail dto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+
+
+    public List<SupplierAndSupplierDetail> getAll() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("select s.supplier_id, s.name, s.phone_no, s.company, sd.item_id, sd.qty, sd.price from supplier join supplier_detail on supplier.supplier_id = supplier_detail.supplier_id ");
-        ArrayList<SupplierAndSupplierDetailDto> list = new ArrayList<>();
+        ArrayList<SupplierAndSupplierDetail> list = new ArrayList<>();
         while (resultSet.next()) {
-            SupplierAndSupplierDetailDto supplierAndSupplierDetailDto = new SupplierAndSupplierDetailDto(
+            SupplierAndSupplierDetail supplierAndSupplierDetail = new SupplierAndSupplierDetail(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -37,8 +52,19 @@ public class SupplierDetailModel {
                     resultSet.getDouble(8)
 
             );
-            list.add(supplierAndSupplierDetailDto);
+            list.add(supplierAndSupplierDetail);
         }
         return list;
     }
+
+    @Override
+    public boolean delete(String customerId) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean update(SupplierAndSupplierDetail customerDto) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
 }

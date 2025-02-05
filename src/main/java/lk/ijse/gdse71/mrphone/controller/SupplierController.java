@@ -11,12 +11,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.gdse71.mrphone.BO.BOFactory;
 import lk.ijse.gdse71.mrphone.BO.custom.SupplierBO;
-import lk.ijse.gdse71.mrphone.BO.custom.impl.SupplierBOImpl;
-import lk.ijse.gdse71.mrphone.dto.SupplierDto;
 import lk.ijse.gdse71.mrphone.dto.tm.SupplierTm;
 import lk.ijse.gdse71.mrphone.entity.Supplier;
-import lk.ijse.gdse71.mrphone.model.SupplierDetailModel;
-import lk.ijse.gdse71.mrphone.dao.custom.impl.SupplierDAOImpl;
+import lk.ijse.gdse71.mrphone.dao.custom.impl.SupplierDetailDAOImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -131,7 +128,7 @@ public class SupplierController implements Initializable {
 
     }
     //SupplierDAOImpl supplierDAOImpl = new SupplierDAOImpl();
-    SupplierDetailModel supplierDetailModel = new SupplierDetailModel();
+    SupplierDetailDAOImpl supplierDetailDAOImpl = new SupplierDetailDAOImpl();
 
 
     @FXML
