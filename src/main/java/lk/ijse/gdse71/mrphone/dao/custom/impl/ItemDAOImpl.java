@@ -71,6 +71,7 @@ public class ItemDAOImpl implements ItemDAO {
                 orderDetailDto.getQty(),
                 orderDetailDto.getItemId()
         );
+
     }
 
     public ArrayList<String> getAllItemId() throws SQLException, ClassNotFoundException {

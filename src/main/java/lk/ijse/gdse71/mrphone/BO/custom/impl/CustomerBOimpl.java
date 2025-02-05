@@ -71,4 +71,9 @@ public class CustomerBOimpl implements CustomerBO {
                 ));
     }
 
+    @Override
+    public String findById(String customerId) throws SQLException, ClassNotFoundException {
+        return customerDAO.findById(customerId);
+    }
+
 }

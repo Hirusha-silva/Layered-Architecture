@@ -15,6 +15,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lk.ijse.gdse71.mrphone.BO.BOFactory;
 import lk.ijse.gdse71.mrphone.BO.custom.CustomerBO;
+import lk.ijse.gdse71.mrphone.BO.custom.ItemBO;
+import lk.ijse.gdse71.mrphone.BO.custom.OrdersBO;
+import lk.ijse.gdse71.mrphone.dao.custom.ItemDAO;
 import lk.ijse.gdse71.mrphone.dto.CustomerDto;
 import lk.ijse.gdse71.mrphone.dto.ItemDto;
 import lk.ijse.gdse71.mrphone.dto.OrderDetailDto;
@@ -22,7 +25,7 @@ import lk.ijse.gdse71.mrphone.dto.OrdersDto;
 import lk.ijse.gdse71.mrphone.dto.tm.CartTm;
 
 import lk.ijse.gdse71.mrphone.dao.custom.impl.ItemDAOImpl;
-import lk.ijse.gdse71.mrphone.model.OrdersModel;
+
 
 import java.io.IOException;
 import java.sql.Date;
@@ -96,8 +99,9 @@ public class OrdersController implements Initializable {
     @FXML
     private TableView<CartTm> tblCart;
 
-    private final OrdersModel orderModel = new OrdersModel();
-    private final ItemDAOImpl itemDAOImpl = new ItemDAOImpl();
+    OrdersBO ordersBO = (OrdersBO) BOFactory.getInstance().getBO(BOFactory.BOType.ORDERS);
+
+   ItemBO itemBO = (ItemBO) BOFactory.getInstance().getBO(BOFactory.BOType.ITEM);
     private double totalAmount;
     CustomerBO customerBO= (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOType.CUSTOMER);
 
@@ -127,7 +131,7 @@ public class OrdersController implements Initializable {
             return;
         }
 
-        addCartQty.setText("");
+
 
         double unitPrice = Double.parseDouble(lblUPrice.getText());
         double total = unitPrice * qty ;
@@ -164,22 +168,22 @@ public class OrdersController implements Initializable {
     @FXML
     void cmbCustomerOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String selectedCustomerId = cmbCustomerId.getSelectionModel().getSelectedItem();
-        CustomerDto customerDto = (CustomerDto) BOFactory.getInstance().getBO(BOFactory.BOType.CUSTOMER);
-        //CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOType.CUSTOMER);
+        //CustomerDto customerDto = (CustomerDto) BOFactory.getInstance().getBO(BOFactory.BOType.CUSTOMER);
+        CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOType.CUSTOMER);
 
-        if (selectedCustomerId == null ) {
+
+        if(customerBO != null){
+            String id = customerBO.findById(selectedCustomerId);
+            lblCustomerName.setText(id);
+        }else {
             new Alert(Alert.AlertType.ERROR,"Please select a customer !").show();
-            return;
-        }
-        if(customerDto != null){
-            lblCustomerName.setText(customerDto.getName());
         }
     }
 
     @FXML
     void cmbItemOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String selectedItemId = cmbItemId.getSelectionModel().getSelectedItem();
-        ItemDto itemDto = itemDAOImpl.findById(selectedItemId);
+        ItemDto itemDto = itemBO.findById(selectedItemId);
 
         if (itemDto != null) {
             lblItemName.setText(itemDto.getBrand());
@@ -194,35 +198,42 @@ public class OrdersController implements Initializable {
             new Alert(Alert.AlertType.ERROR,"Please add items to cart..!").show();
             return;
         }
-        if (cmbCustomerId.getSelectionModel().isEmpty()){
-            new Alert(Alert.AlertType.ERROR,"Please select a customer !").show();
-            return;
-        }
 
         String orderId = lblOrderId.getText();
         Date dateOfOrder = Date.valueOf(lblODate.getText());
         String customerId = cmbCustomerId.getValue();
-
-        ArrayList<OrderDetailDto> orderDetailDtos = new ArrayList<>();
-
-        for (CartTm cartTm : cartTms){
-            OrderDetailDto orderDetailDto = new OrderDetailDto(
-                    orderId,
-                    cartTm.getItemId(),
-                    cartTm.getCartQty(),
-                    cartTm.getUnitPrice()
-            );
-            orderDetailDtos.add(orderDetailDto);
+        if(customerId == null){
+            new Alert(Alert.AlertType.ERROR,"Please select a customer !").show();
         }
+
+        String ItemID = cmbItemId.getValue();
+        int qty = Integer.parseInt(addCartQty.getText());
+        Double price = Double.parseDouble(lblUPrice.getText());
+
+
+
+            OrderDetailDto orderDetailDto = new OrderDetailDto(
+                   orderId,
+                    ItemID,
+                    qty,
+                    price
+            );
+
 
         OrdersDto ordersDto = new OrdersDto(
                 orderId,
                 customerId,
-                dateOfOrder,
-                orderDetailDtos
+                dateOfOrder
         );
 
-        boolean isSaved = orderModel.saveOrder(ordersDto);
+        ArrayList<OrdersDto> ordersDtos = new ArrayList<>();
+        ordersDtos.add(ordersDto);
+
+        ArrayList<OrderDetailDto> orderDetailDtos = new ArrayList<>();
+        orderDetailDtos.add(orderDetailDto);
+
+
+        boolean isSaved = ordersBO.saveOrders(ordersDtos,orderDetailDtos);
 
         if (isSaved){
             new Alert(Alert.AlertType.INFORMATION, "Order saved..!").show();
@@ -259,19 +270,18 @@ public class OrdersController implements Initializable {
         tblCart.setItems(cartTms);
     }
     private void reFreshPage() throws Exception {
-        lblOrderId.setText(orderModel.getNextOderId());
+        String orderId = ordersBO.getNextId();
+        lblOrderId.setText(orderId);
         lblODate.setText(LocalDate.now().toString());
 
         loadCustomerIds();
         loadItemIds();
 
-        cmbCustomerId.getSelectionModel().clearSelection();
-        cmbItemId.getSelectionModel().clearSelection();
         lblCustomerName.setText("");
         lblItemName.setText("");
         lblUPrice.setText("");
         lblQty.setText("");
-        addCartQty.clear();
+
 
         cartTms.clear();
         tblCart.refresh();
@@ -284,7 +294,7 @@ public class OrdersController implements Initializable {
     }
 
     private void loadItemIds() throws SQLException, ClassNotFoundException {
-        ArrayList<String> itemIds = itemDAOImpl.getAllItemId();
+        ArrayList<String> itemIds = itemBO.getAllItemId();
         ObservableList<String> observableList = FXCollections.observableArrayList();
         observableList.addAll(itemIds);
         cmbItemId.setItems(observableList);

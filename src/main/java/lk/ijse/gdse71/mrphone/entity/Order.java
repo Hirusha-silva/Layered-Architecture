@@ -1,6 +1,7 @@
-package lk.ijse.gdse71.mrphone.dto;
+package lk.ijse.gdse71.mrphone.entity;
 
 
+import lk.ijse.gdse71.mrphone.dto.OrderDetailDto;
 import lombok.*;
 
 import java.sql.Date;
@@ -11,10 +12,8 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class OrdersDto {
+public class Order{
     private String orderId;
     private String customerId;
     private Date orderDate;
-
-//    private ArrayList<OrderDetailDto> orderDetailDtos;
 }

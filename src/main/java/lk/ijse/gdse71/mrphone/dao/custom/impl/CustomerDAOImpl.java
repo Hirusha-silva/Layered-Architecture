@@ -74,16 +74,11 @@ public class CustomerDAOImpl implements CustomerDAO {
 
         );
     }
-    public CustomerDto findById(String customerId) throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("select * from customer where customer_id=?",customerId);
+    public String findById(String customerId) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("select name from customer where customer_id=?",customerId);
 
         if (resultSet.next()) {
-            return new CustomerDto(
-                    resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getString(4)
-            );
+            return resultSet.getString(1);
         }
         return null;
     }

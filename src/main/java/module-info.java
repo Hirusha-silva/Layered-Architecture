@@ -8,6 +8,7 @@ module lk.ijse.gdse71.mrphone {
     requires java.mail;
     requires net.sf.jasperreports.core;
     requires java.desktop;
+    requires mysql.connector.j;
 
 
     opens lk.ijse.gdse71.mrphone.controller to javafx.fxml;
