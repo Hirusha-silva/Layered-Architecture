@@ -12,7 +12,7 @@ public interface CustomerBO extends SuperBO {
      String getNextId() throws SQLException, ClassNotFoundException;
      List<CustomerDto> getAll() throws SQLException, ClassNotFoundException;
      boolean delete(String customerId) throws SQLException, ClassNotFoundException;
-     boolean save(CustomerDto customerDto) throws SQLException, ClassNotFoundException;
+     boolean save(CustomerDto customer) throws SQLException, ClassNotFoundException;
      boolean update(CustomerDto customerDto) throws SQLException, ClassNotFoundException;
   String findById(String customerId) throws SQLException, ClassNotFoundException;
 }

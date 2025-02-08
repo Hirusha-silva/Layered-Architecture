@@ -9,15 +9,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import lk.ijse.gdse71.mrphone.BO.BOFactory;
 import lk.ijse.gdse71.mrphone.BO.custom.ItemBO;
-import lk.ijse.gdse71.mrphone.BO.custom.impl.ItemBOImpl;
-import lk.ijse.gdse71.mrphone.dao.custom.ItemDAO;
-import lk.ijse.gdse71.mrphone.dao.custom.impl.ItemDAOImpl;
 import lk.ijse.gdse71.mrphone.dao.custom.impl.ItemDetailDAOImpl;
 import lk.ijse.gdse71.mrphone.dto.ItemDetailDto;
 import lk.ijse.gdse71.mrphone.dto.ItemDto;
 import lk.ijse.gdse71.mrphone.dto.tm.ItemTm;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -217,10 +215,18 @@ public class ItemController {
        // ItemDto itemDto = new ItemDto(item_id, price, brand, qty, description);
         //ItemDetailDto itemDetailDto = new ItemDetailDto(item_id, inventory_id);
         try {
-            boolean isSavedI = itemBO.save(new ItemDto(item_id, price, brand, qty, description));
-            boolean isSavedID = itemDetailDAOImpl.saveItem(new ItemDetailDto(item_id, inventory_id));
+            ItemDto itemDto = new ItemDto(item_id, price, brand, qty, description);
+            ItemDetailDto itemDetailDto = new ItemDetailDto(item_id, inventory_id);
 
-            if (isSavedI && isSavedID) {
+            ArrayList<ItemDto> itemDtos = new ArrayList<>();
+            itemDtos.add(itemDto);
+
+            ArrayList<ItemDetailDto> itemDetailDtos = new ArrayList<>();
+            itemDetailDtos.add(itemDetailDto);
+
+            boolean isSaved = itemBO.save(itemDtos,itemDetailDtos);
+
+            if (isSaved) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION,"Item Saved").show();
             }
@@ -267,10 +273,20 @@ public class ItemController {
        // ItemDto itemDto = new ItemDto(item_id, price, brand, qty, description);
        // ItemDetailDto itemDetailDto = new ItemDetailDto(item_id, inventory_id);
 
-        boolean isUpdateI = itemBO.update(new ItemDto(item_id, price, brand, qty, description));
-        boolean isUpdateID = itemDetailDAOImpl.updateItem(new ItemDetailDto(item_id, inventory_id));
+         ItemDto itemDto = new ItemDto(
+                 item_id,
+                 price,
+                 brand,
+                 qty,
+                 description
+         );
 
-        if (isUpdateI && isUpdateID) {
+
+
+
+
+        boolean isSaved = itemBO.update(itemDto);
+        if (isSaved) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION,"Item Updated").show();
         }else {

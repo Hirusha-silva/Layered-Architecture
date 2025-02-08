@@ -2,6 +2,8 @@ package lk.ijse.gdse71.mrphone.dao.custom.impl;
 
 import lk.ijse.gdse71.mrphone.dao.custom.EmployeeDAO;
 import lk.ijse.gdse71.mrphone.dto.EmployeeDto;
+import lk.ijse.gdse71.mrphone.entity.Employee;
+import lk.ijse.gdse71.mrphone.entity.Item;
 import lk.ijse.gdse71.mrphone.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
-    public  boolean save(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
+    public  boolean save(Employee employeeDto) throws SQLException, ClassNotFoundException {
         boolean isSaved = CrudUtil.execute("insert into employee values(?,?,?,?)",
                 employeeDto.getEmployee_id(),
                 employeeDto.getName(),
@@ -30,11 +32,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         }
         return "E001";
     }
-    public  List<EmployeeDto> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<Employee> getAll() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("select * from employee");
-        List<EmployeeDto> employeeDtos = new ArrayList<>();
+        ArrayList<Employee> employeeDtos = new ArrayList<>();
         while (resultSet.next()) {
-            EmployeeDto employeeDto = new EmployeeDto(
+            Employee employeeDto = new Employee(
                     resultSet.getNString(1),
                     resultSet.getNString(2),
                     resultSet.getNString(3),
@@ -48,7 +50,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return CrudUtil.execute("delete from employee where employee_id=?", employeeId);
     }
 
-    public boolean update(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
+    public boolean update(Employee employeeDto) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("update employee set name=? , phone_no=? , address=? where employee_id=?",
                 employeeDto.getName(),
                 employeeDto.getPhone_no(),

@@ -1,11 +1,13 @@
 package lk.ijse.gdse71.mrphone.dao.custom.impl;
 
 import lk.ijse.gdse71.mrphone.dao.custom.OrderDAO;
+import lk.ijse.gdse71.mrphone.entity.Item;
 import lk.ijse.gdse71.mrphone.entity.Order;
 import lk.ijse.gdse71.mrphone.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDAOImpl implements OrderDAO {
@@ -35,8 +37,8 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public List<Order> getAll() throws SQLException, ClassNotFoundException {
-        return List.of();
+    public ArrayList<Order> getAll() throws SQLException, ClassNotFoundException {
+        return null;
     }
 
     @Override

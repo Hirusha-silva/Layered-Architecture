@@ -16,9 +16,9 @@ public class EmployeeBOimpl implements EmployeeBO {
     @Override
     public List<EmployeeDto> getAll() throws SQLException, ClassNotFoundException {
         List<EmployeeDto> employeeDtos = new ArrayList<>();
-        List<EmployeeDto> employees = employeeDAO.getAll();
+        List<Employee> employees = employeeDAO.getAll();
 
-        for (EmployeeDto employee : employees) {
+        for (Employee employee : employees) {
             employeeDtos.add(new EmployeeDto(
                     employee.getEmployee_id(),
                     employee.getName(),
@@ -31,8 +31,13 @@ public class EmployeeBOimpl implements EmployeeBO {
     }
 
     @Override
-    public boolean save(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
-       return employeeDAO.save(employeeDto);
+    public boolean save(EmployeeDto employee) throws SQLException, ClassNotFoundException {
+       return employeeDAO.save(new Employee(
+               employee.getEmployee_id(),
+               employee.getName(),
+               employee.getPhone_no(),
+               employee.getAddress()
+       ));
     }
 
     @Override
@@ -46,7 +51,12 @@ public class EmployeeBOimpl implements EmployeeBO {
     }
 
     @Override
-    public boolean update(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
-        return employeeDAO.update(employeeDto);
+    public boolean update(EmployeeDto employee) throws SQLException, ClassNotFoundException {
+        return employeeDAO.update(new Employee(
+                employee.getEmployee_id(),
+                employee.getName(),
+                employee.getPhone_no(),
+                employee.getAddress()
+        ));
     }
 }

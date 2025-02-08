@@ -20,7 +20,7 @@ public class DAOFactory {
                 case ITEM:
                     return new ItemDAOImpl();
                     case ITEMDETAIL:
-                        return (SuperDAO) new ItemDetailDAOImpl();
+                        return new ItemDetailDAOImpl();
                         case EMPLOYEE:
                             return new EmployeeDAOImpl();
                             case REPAIR:

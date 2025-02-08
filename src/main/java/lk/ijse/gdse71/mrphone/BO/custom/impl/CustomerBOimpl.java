@@ -3,7 +3,6 @@ package lk.ijse.gdse71.mrphone.BO.custom.impl;
 import lk.ijse.gdse71.mrphone.BO.custom.CustomerBO;
 import lk.ijse.gdse71.mrphone.dao.DAOFactory;
 import lk.ijse.gdse71.mrphone.dao.custom.CustomerDAO;
-import lk.ijse.gdse71.mrphone.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.gdse71.mrphone.dto.CustomerDto;
 import lk.ijse.gdse71.mrphone.entity.Customer;
 
@@ -26,7 +25,7 @@ public class CustomerBOimpl implements CustomerBO {
     @Override
     public List<CustomerDto> getAll() throws SQLException, ClassNotFoundException {
         List<CustomerDto> customerDtos = new ArrayList<>();
-        List<CustomerDto> customers = customerDAO.getAll();
+        List<Customer> customers = customerDAO.getAll();
 //        while (customers.add(new CustomerDto())) {
 //            CustomerDto customerDto = new CustomerDto(
 //                    customers.getString(1),
@@ -36,7 +35,7 @@ public class CustomerBOimpl implements CustomerBO {
 //            );
 //            customerDtos.add(customerDto);
 //        }
-        for (CustomerDto customer : customers) {
+        for (Customer customer : customers) {
            customerDtos.add(new CustomerDto(
                    customer.getCustomer_id(),
                    customer.getName(),
@@ -53,7 +52,7 @@ public class CustomerBOimpl implements CustomerBO {
 
     @Override
     public boolean save(CustomerDto customerDto) throws SQLException, ClassNotFoundException {
-        return customerDAO.save(new CustomerDto(
+        return customerDAO.save(new Customer(
                 customerDto.getCustomer_id(),
                 customerDto.getName(),
                 customerDto.getPhone_no(),
@@ -62,12 +61,12 @@ public class CustomerBOimpl implements CustomerBO {
     }
 
     @Override
-    public boolean update(CustomerDto customerDto) throws SQLException, ClassNotFoundException {
-        return customerDAO.update(new CustomerDto(
-                customerDto.getCustomer_id(),
-                customerDto.getName(),
-                customerDto.getPhone_no(),
-                customerDto.getEmail()
+    public boolean update(CustomerDto customer) throws SQLException, ClassNotFoundException {
+        return customerDAO.update(new Customer(
+                customer.getCustomer_id(),
+                customer.getName(),
+                customer.getPhone_no(),
+                customer.getEmail()
                 ));
     }
 

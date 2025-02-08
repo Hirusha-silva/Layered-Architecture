@@ -2,6 +2,8 @@ package lk.ijse.gdse71.mrphone.dao.custom.impl;
 
 import lk.ijse.gdse71.mrphone.dao.custom.RepairDAO;
 import lk.ijse.gdse71.mrphone.dto.RepairDto;
+import lk.ijse.gdse71.mrphone.entity.Item;
+import lk.ijse.gdse71.mrphone.entity.Repair;
 import lk.ijse.gdse71.mrphone.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -23,13 +25,13 @@ public class RepairDAOImpl implements RepairDAO {
         }
         return "R001";
     }
-    public  List<RepairDto> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<Repair> getAll() throws SQLException, ClassNotFoundException {
 
 
         ResultSet resultSet = CrudUtil.execute("select * from repairing");
-        List<RepairDto> repairDtos = new ArrayList<>();
+        ArrayList<Repair> repairDtos = new ArrayList<>();
         while (resultSet.next()) {
-            RepairDto repairDto = new RepairDto(
+            Repair repairDto = new Repair(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -40,29 +42,29 @@ public class RepairDAOImpl implements RepairDAO {
         }
         return repairDtos;
     }
-    public  boolean save(RepairDto repairDto) throws SQLException, ClassNotFoundException {
+    public  boolean save(Repair entity) throws SQLException, ClassNotFoundException {
 
         boolean isSaved = CrudUtil.execute(
                 "insert into repairing values(?,?,?,?,?)",
-                repairDto.getRepairing_id(),
-                repairDto.getCustomer_id(),
-                repairDto.getDescription(),
-                repairDto.getDate(),
-                repairDto.getStatus()
+                entity.getRepairing_id(),
+                entity.getCustomer_id(),
+                entity.getDescription(),
+                entity.getDate(),
+                entity.getStatus()
         );
         return isSaved;
     }
 
-    public boolean update(RepairDto repairDto) throws SQLException, ClassNotFoundException {
+    public boolean update(Repair repair) throws SQLException, ClassNotFoundException {
 
 
         return CrudUtil.execute(
                 "Update repairing  set customer_id=?,description=?,status=?, date=? where repairing_id=?",
-                repairDto.getCustomer_id(),
-                repairDto.getDescription(),
-                repairDto.getStatus(),
-                repairDto.getDate(),
-                repairDto.getRepairing_id()
+                repair.getCustomer_id(),
+                repair.getDescription(),
+                repair.getStatus(),
+                repair.getDate(),
+                repair.getRepairing_id()
 
         );
 

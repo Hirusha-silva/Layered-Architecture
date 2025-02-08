@@ -3,6 +3,7 @@ package lk.ijse.gdse71.mrphone.dao.custom.impl;
 import lk.ijse.gdse71.mrphone.dao.custom.ItemDAO;
 import lk.ijse.gdse71.mrphone.dto.ItemDto;
 import lk.ijse.gdse71.mrphone.dto.OrderDetailDto;
+import lk.ijse.gdse71.mrphone.entity.Item;
 import lk.ijse.gdse71.mrphone.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -23,11 +24,13 @@ public class ItemDAOImpl implements ItemDAO {
         }
         return "I001";
     }
-    public List<ItemDto> getAll() throws SQLException, ClassNotFoundException {
+
+
+    public ArrayList<Item> getAll() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("select * from item");
-        List<ItemDto> itemDtoList = new ArrayList<>();
+        ArrayList<Item> itemDtoList = new ArrayList<>();
         while (resultSet.next()) {
-            ItemDto itemDto = new ItemDto(
+            Item itemDto = new Item(
                     resultSet.getString(1),
                     resultSet.getDouble(2),
                     resultSet.getString(3),
@@ -39,26 +42,26 @@ public class ItemDAOImpl implements ItemDAO {
         }
         return itemDtoList;
     }
-    public boolean save(ItemDto itemDto) throws SQLException, ClassNotFoundException {
+    public boolean save(Item item) throws SQLException, ClassNotFoundException {
         boolean isSaved = CrudUtil.execute(
                 "insert into item values(?,?,?,?,?)",
-                itemDto.getItem_id(),
-                itemDto.getPrice(),
-                itemDto.getBrand(),
-                itemDto.getQty(),
-                itemDto.getDescription()
+                item.getItem_id(),
+                item.getPrice(),
+                item.getBrand(),
+                item.getQty(),
+                item.getDescription()
 
         );
         return isSaved;
     }
-    public boolean update(ItemDto itemDto) throws SQLException, ClassNotFoundException {
+    public boolean update(Item item) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute(
                 "update item set price=?,brand=?,qty=?,description=? where item_id=?",
-                itemDto.getPrice(),
-                itemDto.getBrand(),
-                itemDto.getQty(),
-                itemDto.getDescription(),
-                itemDto.getItem_id()
+                item.getPrice(),
+                item.getBrand(),
+                item.getQty(),
+                item.getDescription(),
+                item.getItem_id()
         );
     }
     public boolean delete(String item_id) throws SQLException, ClassNotFoundException {

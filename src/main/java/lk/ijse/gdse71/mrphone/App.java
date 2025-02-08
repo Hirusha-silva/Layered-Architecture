@@ -11,7 +11,7 @@ import java.io.IOException;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/dashboard-form.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/login-form.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Mr.Phone");
         Image image = new Image(getClass().getResourceAsStream("/assets/image/360_F_779074248_wOi17drmXgV4pY7iy5phmgwbMynbadjw (1).jpg"));

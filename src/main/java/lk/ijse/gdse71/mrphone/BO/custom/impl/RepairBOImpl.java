@@ -21,8 +21,8 @@ public class RepairBOImpl implements RepairBO {
     @Override
     public List<RepairDto> getAll() throws SQLException, ClassNotFoundException {
         List<RepairDto> repairDtos = new ArrayList<>();
-        List<RepairDto> repairs = repairDAO.getAll();
-        for (RepairDto repair : repairs) {
+        List<Repair> repairs = repairDAO.getAll();
+        for (Repair repair : repairs) {
             repairDtos.add(new RepairDto(repair.getRepairing_id(),repair.getCustomer_id(),repair.getDescription(),repair.getDate(),repair.getStatus()));
         }
         return repairDtos;
@@ -30,12 +30,12 @@ public class RepairBOImpl implements RepairBO {
 
     @Override
     public boolean save(RepairDto repairDto) throws SQLException, ClassNotFoundException {
-        return repairDAO.save(new RepairDto(repairDto.getRepairing_id(),repairDto.getCustomer_id(),repairDto.getDescription(),repairDto.getDate(),repairDto.getStatus()));
+        return repairDAO.save(new Repair(repairDto.getRepairing_id(),repairDto.getCustomer_id(),repairDto.getDescription(),repairDto.getDate(),repairDto.getStatus()));
     }
 
     @Override
     public boolean update(RepairDto repairDto) throws SQLException, ClassNotFoundException {
-        return repairDAO.update(new RepairDto(repairDto.getRepairing_id(),repairDto.getCustomer_id(),repairDto.getDescription(),repairDto.getDate(),repairDto.getStatus()));
+        return repairDAO.update(new Repair(repairDto.getRepairing_id(),repairDto.getCustomer_id(),repairDto.getDescription(),repairDto.getDate(),repairDto.getStatus()));
     }
 
     @Override

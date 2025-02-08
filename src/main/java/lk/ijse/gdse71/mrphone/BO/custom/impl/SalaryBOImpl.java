@@ -4,6 +4,7 @@ import lk.ijse.gdse71.mrphone.BO.custom.SalaryBO;
 import lk.ijse.gdse71.mrphone.dao.DAOFactory;
 import lk.ijse.gdse71.mrphone.dao.custom.SalaryDAO;
 import lk.ijse.gdse71.mrphone.dto.SalaryDto;
+import lk.ijse.gdse71.mrphone.entity.Salary;
 
 import java.sql.SQLException;
 
@@ -16,6 +17,6 @@ public class SalaryBOImpl implements SalaryBO {
 
     @Override
     public boolean save(SalaryDto salaryDto) throws SQLException, ClassNotFoundException {
-       return salaryDAO.save(new SalaryDto(salaryDto.getSalary_id(),salaryDto.getEmployee_id(),salaryDto.getAmount(),salaryDto.getDate()));
+        return false;
     }
 }

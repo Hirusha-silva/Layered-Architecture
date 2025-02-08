@@ -1,14 +1,13 @@
 package lk.ijse.gdse71.mrphone.dao.custom.impl;
 
 import lk.ijse.gdse71.mrphone.dao.custom.SupplierDAO;
-import lk.ijse.gdse71.mrphone.dto.*;
+import lk.ijse.gdse71.mrphone.entity.Item;
 import lk.ijse.gdse71.mrphone.entity.Supplier;
 import lk.ijse.gdse71.mrphone.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class SupplierDAOImpl implements SupplierDAO {
 
@@ -38,7 +37,7 @@ public class SupplierDAOImpl implements SupplierDAO {
         return "S001";
     }
 
-    public List<Supplier> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<Supplier> getAll() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("select * from supplier");
         ArrayList<Supplier> list = new ArrayList<>();
         while (resultSet.next()) {

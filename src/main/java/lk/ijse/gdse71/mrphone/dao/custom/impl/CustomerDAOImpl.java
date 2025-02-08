@@ -1,7 +1,8 @@
 package lk.ijse.gdse71.mrphone.dao.custom.impl;
 
 import lk.ijse.gdse71.mrphone.dao.custom.CustomerDAO;
-import lk.ijse.gdse71.mrphone.dto.CustomerDto;
+import lk.ijse.gdse71.mrphone.entity.Customer;
+import lk.ijse.gdse71.mrphone.entity.Item;
 import lk.ijse.gdse71.mrphone.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -30,31 +31,37 @@ public class CustomerDAOImpl implements CustomerDAO {
         }
         return "C001";
     }
-    public  boolean save(CustomerDto customerDto) throws SQLException, ClassNotFoundException {
+    public  boolean save(Customer entity) throws SQLException, ClassNotFoundException {
 
         boolean isSaved = CrudUtil.execute(
                 "insert into customer values(?,?,?,?)",
-                    customerDto.getCustomer_id(),
-                    customerDto.getName(),
-                    customerDto.getPhone_no(),
-                    customerDto.getEmail()
+                    entity.getCustomer_id(),
+                    entity.getName(),
+                    entity.getPhone_no(),
+                    entity.getEmail()
         );
         return isSaved;
     }
 
-    public  List<CustomerDto> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<Customer> getAll() throws SQLException, ClassNotFoundException {
 
 
         ResultSet resultSet = CrudUtil.execute("select * from customer");
-        List<CustomerDto> customerDtos = new ArrayList<>();
+        ArrayList<Customer> customerDtos = new ArrayList<>();
         while (resultSet.next()) {
-            CustomerDto customerDto = new CustomerDto(
+            customerDtos.add(new Customer(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4)
+            ));
+ /*           CustomerDto customerDto = new CustomerDto(
             resultSet.getString(1),
             resultSet.getString(2),
             resultSet.getString(3),
             resultSet.getString(4)
             );
-            customerDtos.add(customerDto);
+            customerDtos.add(customerDto);*/
         }
         return customerDtos;
     }
@@ -62,14 +69,14 @@ public class CustomerDAOImpl implements CustomerDAO {
 
         return CrudUtil.execute("delete from customer where customer_id=?", customerId);
     }
-    public boolean update(CustomerDto customerDto) throws SQLException, ClassNotFoundException {
+    public boolean update(Customer entity) throws SQLException, ClassNotFoundException {
 
         return CrudUtil.execute(
                 "Update customer set name=?,phone_no=?,email=? where customer_id=?",
-                customerDto.getName(),
-                customerDto.getPhone_no(),
-                customerDto.getEmail(),
-                customerDto.getCustomer_id()
+                entity.getName(),
+                entity.getPhone_no(),
+                entity.getEmail(),
+                entity.getCustomer_id()
 
 
         );
