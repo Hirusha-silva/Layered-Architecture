@@ -157,20 +157,9 @@ public class SupplierController implements Initializable {
             txtPhone.requestFocus();
             return;
         }
-        SupplierDto supplierDto = new SupplierDto(
-                supplier_id,name,phone_no,company
-        );
-        SupplierDetailDto supplierDetailDto = new SupplierDetailDto(
-              supplier_id,ItemIds,qtys,prices
-        );
-        ArrayList<SupplierDto>supplierDtos = new ArrayList<>();
-        supplierDtos.add(supplierDto);
-
-        ArrayList<SupplierDetailDto>supplierDetailDtos = new ArrayList<>();
-        supplierDetailDtos.add(supplierDetailDto);
 
 
-            boolean isSaved=supplierBO.save(supplierDtos,supplierDetailDtos);
+            boolean isSaved=supplierBO.save(new SupplierDto(supplier_id,name,phone_no,company));
 
 
             if (isSaved) {
@@ -196,7 +185,7 @@ public class SupplierController implements Initializable {
     private void loadTableData() {
         ObservableList<SupplierTm> oblist = FXCollections.observableArrayList();
         try {
-            List<SupplierDto> suppliers = supplierBO.getAll();
+            List<SupplierDto> suppliers = supplierBO.getAllSupplier();
             for (SupplierDto supplierDto: suppliers) {
                 SupplierTm supplierTm = new SupplierTm(
                         supplierDto.getSupplier_id(),

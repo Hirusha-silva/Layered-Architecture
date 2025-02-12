@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SupplierDetailDAOImpl implements SupplierDetailDAO {
-    public  boolean save(SupplierDetailDto supplierDetailDto) throws SQLException, ClassNotFoundException {
+    public  boolean save(SupplierDetail supplierDetailDto) throws SQLException, ClassNotFoundException {
 
         boolean isSaved = CrudUtil.execute(
                 "insert into supplierDetail values(?,?,?,?)",
@@ -28,13 +28,6 @@ public class SupplierDetailDAOImpl implements SupplierDetailDAO {
     public String getNextId() throws SQLException, ClassNotFoundException {
         return "";
     }
-
-    @Override
-    public boolean save(SupplierDetail dto) throws SQLException, ClassNotFoundException {
-        return false;
-    }
-
-
 
     public ArrayList<SupplierDetail> getAll() throws SQLException, ClassNotFoundException {
         return null;

@@ -53,16 +53,6 @@ public class SupplierDAOImpl implements SupplierDAO {
         return list;
     }
 
-//public ArrayList<String> getAllItemId() throws SQLException, ClassNotFoundException {
-//    ResultSet resultSet = CrudUtil.execute("select supplier_id from supplier");
-//
-//    ArrayList<String> supplierIdList = new ArrayList<>();
-//
-//    while (resultSet.next()) {
-//        supplierIdList.add(resultSet.getString(1));
-//    }
-//    return supplierIdList;
-//}
 public boolean update(Supplier entity) throws SQLException, ClassNotFoundException {
 
 
