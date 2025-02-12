@@ -14,7 +14,7 @@
    <children>
       <ImageView fitHeight="658.0" fitWidth="779.0" layoutY="2.0">
          <image>
-            <Image url="@../assets/image/240_F_577949059_PFOgRv9zOclHStKE7HHABKLeePmvC4Ux (1).jpg" />
+            <Image url="@../assets/image/240_F_537919631_hjFC6dkoeLjDfRLVaYkEFiElyuvq4w27 (1).jpg" />
          </image>
       </ImageView>
       <ImageView fitHeight="658.0" fitWidth="779.0" layoutX="-1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />

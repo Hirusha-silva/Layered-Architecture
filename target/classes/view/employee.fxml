@@ -14,7 +14,7 @@
    <children>
       <ImageView fitHeight="658.0" fitWidth="779.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../assets/image/240_F_679829208_531ofwOdBq9DC7q0bXOirEVMgb9YUFI3%20(1).jpg" />
+            <Image url="@../assets/image/240_F_537919631_hjFC6dkoeLjDfRLVaYkEFiElyuvq4w27 (1).jpg" />
          </image>
       </ImageView>
       <Label layoutX="14.0" layoutY="36.0" text="Employee Id :">

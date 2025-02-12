@@ -2,6 +2,7 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -18,7 +19,7 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <ImageView fitHeight="185.0" fitWidth="182.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="185.0" fitWidth="182.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assets/image/Mr. Phone With Background.png" />
                </image>
@@ -103,6 +104,23 @@
             </Button>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="node" layoutX="182.0" prefHeight="658.0" prefWidth="779.0" style="-fx-background-color: #ecf0f1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="182.0" AnchorPane.rightAnchor="-5.0" AnchorPane.topAnchor="0.0" />
+      <AnchorPane fx:id="node" layoutX="182.0" prefHeight="658.0" prefWidth="779.0" style="-fx-background-color: #ecf0f1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="182.0" AnchorPane.rightAnchor="-5.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="658.0" fitWidth="779.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/image/word-image-1087-2%20(1).jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="7.0" layoutY="436.0" prefHeight="129.0" prefWidth="316.0" text="Best Brands at&#10;the Best Prices&#10;All under one roof" textFill="#fcfafa">
+               <font>
+                  <Font name="Chakra Petch Light" size="32.0" />
+               </font>
+            </Label>
+            <Label layoutX="7.0" layoutY="565.0" prefHeight="63.0" prefWidth="300.0" text="One of the largest wholesalers of branded Mobile &#10;phones and world class accessories.&#10;" textFill="RED">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
    </children>
 </AnchorPane>
