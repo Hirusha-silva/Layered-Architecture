@@ -14,7 +14,7 @@
    <children>
       <ImageView fitHeight="658.0" fitWidth="779.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../assets/image/360_F_351512882_2kFH8IaSe4lyA7SXBLzEXyGKNEgbO1iH%20(1).jpg" />
+            <Image url="@../assets/image/240_F_537919631_hjFC6dkoeLjDfRLVaYkEFiElyuvq4w27 (1).jpg" />
          </image>
       </ImageView>
       <Label layoutX="71.0" layoutY="12.0" prefHeight="22.0" prefWidth="88.0" text="Customer Id">
