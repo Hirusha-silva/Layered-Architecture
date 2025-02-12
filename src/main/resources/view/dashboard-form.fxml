@@ -93,6 +93,14 @@
                   <Image url="@../icon/icons8-settings-94.png" />
                </image>
             </ImageView>
+            <Button fx:id="btnLogOut" layoutX="9.0" layoutY="583.0" mnemonicParsing="false" onAction="#btnLogOutAction" prefHeight="39.0" prefWidth="165.0" style="-fx-background-color: #2ecc71; -fx-border-color: #ecf0f1; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20;" text="Log Out" textFill="WHITE">
+               <font>
+                  <Font size="19.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="node" layoutX="182.0" prefHeight="658.0" prefWidth="779.0" style="-fx-background-color: #ecf0f1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="182.0" AnchorPane.rightAnchor="-5.0" AnchorPane.topAnchor="0.0" />
