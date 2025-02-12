@@ -9,6 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface OrdersBO extends SuperBO {
-    boolean saveOrders(List<OrdersDto>ordersDtos, List<OrderDetailDto>orderDetailDtos) throws Exception;
+     boolean saveOrders(List<OrdersDto>ordersDtos, List<OrderDetailDto>orderDetailDtos) throws Exception;
      String getNextId() throws SQLException, ClassNotFoundException;
 }

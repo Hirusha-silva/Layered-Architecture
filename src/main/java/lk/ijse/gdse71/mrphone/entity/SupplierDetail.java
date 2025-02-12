@@ -12,5 +12,4 @@ public class SupplierDetail {
     private String item_id;
     private int qty;
     private double price;
-    private String brand;
 }

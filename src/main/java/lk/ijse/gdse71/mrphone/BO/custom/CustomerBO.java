@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface CustomerBO extends SuperBO {
-    ArrayList<String> getAllCustomerIds() throws SQLException, ClassNotFoundException;
+     ArrayList<String> getAllCustomerIds() throws SQLException, ClassNotFoundException;
      String getNextId() throws SQLException, ClassNotFoundException;
      List<CustomerDto> getAll() throws SQLException, ClassNotFoundException;
      boolean delete(String customerId) throws SQLException, ClassNotFoundException;
      boolean save(CustomerDto customer) throws SQLException, ClassNotFoundException;
      boolean update(CustomerDto customerDto) throws SQLException, ClassNotFoundException;
-  String findById(String customerId) throws SQLException, ClassNotFoundException;
+     String findById(String customerId) throws SQLException, ClassNotFoundException;
 }

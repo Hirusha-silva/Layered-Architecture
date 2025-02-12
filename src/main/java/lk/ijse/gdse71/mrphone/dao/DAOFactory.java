@@ -11,7 +11,7 @@ public class DAOFactory {
         return daoFactory==null?daoFactory=new DAOFactory():daoFactory;
     }
     public enum DAOType{
-        CUSTOMER,ITEM,ITEMDETAIL,EMPLOYEE,REPAIR,SALARY,PAYMENT,SUPPLIER,SUPPLIERDETAIL,ORDER,ORDER_DETAIL;
+        CUSTOMER,ITEM,ITEMDETAIL,EMPLOYEE,REPAIR,SALARY,PAYMENT,SUPPLIER,SUPPLIERDETAIL,ORDER,ORDER_DETAIL,QUERY;
     }
     public SuperDAO getDAO(DAOType type){
         switch (type) {
@@ -37,6 +37,8 @@ public class DAOFactory {
                                                     return new OrderDAOImpl();
                                                     case ORDER_DETAIL:
                                                         return new OrderDetailDAOImpl();
+                                                        case QUERY:
+                                                            return new QuerryDAOImpl();
 
                 default:
                     return null;

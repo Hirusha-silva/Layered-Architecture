@@ -11,12 +11,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.gdse71.mrphone.BO.BOFactory;
 import lk.ijse.gdse71.mrphone.BO.custom.SupplierBO;
+import lk.ijse.gdse71.mrphone.dto.SupplierDetailDto;
+import lk.ijse.gdse71.mrphone.dto.SupplierDto;
 import lk.ijse.gdse71.mrphone.dto.tm.SupplierTm;
 import lk.ijse.gdse71.mrphone.entity.Supplier;
 import lk.ijse.gdse71.mrphone.dao.custom.impl.SupplierDetailDAOImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -128,15 +131,19 @@ public class SupplierController implements Initializable {
 
     }
     //SupplierDAOImpl supplierDAOImpl = new SupplierDAOImpl();
-    SupplierDetailDAOImpl supplierDetailDAOImpl = new SupplierDetailDAOImpl();
+
 
 
     @FXML
-    void SaveSupplier(ActionEvent event) {
+    void SaveSupplier(ActionEvent event) throws SQLException, ClassNotFoundException {
         String supplier_id = lblSupplierId.getText();
         String name = txtName.getText();
         String phone_no = txtPhone.getText();
         String company = txtCompany.getText();
+
+        String ItemIds = txtItemId.getText();
+        int qtys = Integer.parseInt(txtQty.getText());
+        Double prices = Double.valueOf(txtPrice.getText());
 
 
 
@@ -150,22 +157,29 @@ public class SupplierController implements Initializable {
             txtPhone.requestFocus();
             return;
         }
+        SupplierDto supplierDto = new SupplierDto(
+                supplier_id,name,phone_no,company
+        );
+        SupplierDetailDto supplierDetailDto = new SupplierDetailDto(
+              supplier_id,ItemIds,qtys,prices
+        );
+        ArrayList<SupplierDto>supplierDtos = new ArrayList<>();
+        supplierDtos.add(supplierDto);
+
+        ArrayList<SupplierDetailDto>supplierDetailDtos = new ArrayList<>();
+        supplierDetailDtos.add(supplierDetailDto);
 
 
+            boolean isSaved=supplierBO.save(supplierDtos,supplierDetailDtos);
 
-//        SupplierDAOImpl supplierDAOImpl = new SupplierDAOImpl();
-//        SupplierDto supplierDto = new SupplierDto(supplier_id, name, phone_no, company);
-
-        try {
-            boolean isSaved = supplierBO.save(new Supplier(supplier_id,name,phone_no,company));
 
             if (isSaved) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Supplier has been saved successfully").show();
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Fail to save supplier").show();
             }
-        }catch (SQLException | ClassNotFoundException e) {
-            new Alert(Alert.AlertType.ERROR, "Something went wrong, please try again").show();
-        }
+
 
     }
 
@@ -182,8 +196,8 @@ public class SupplierController implements Initializable {
     private void loadTableData() {
         ObservableList<SupplierTm> oblist = FXCollections.observableArrayList();
         try {
-            List<Supplier> suppliers = supplierBO.getAll();
-            for (Supplier supplierDto: suppliers) {
+            List<SupplierDto> suppliers = supplierBO.getAll();
+            for (SupplierDto supplierDto: suppliers) {
                 SupplierTm supplierTm = new SupplierTm(
                         supplierDto.getSupplier_id(),
                         supplierDto.getName(),
@@ -226,7 +240,7 @@ public class SupplierController implements Initializable {
             return;
         }
 
-        boolean isUpdated = supplierBO.update(new Supplier(supplier_id,name,phone_no,company));
+        boolean isUpdated = supplierBO.update(new SupplierDto(supplier_id,name,phone_no,company));
         if (isUpdated) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Supplier has been updated successfully").show();

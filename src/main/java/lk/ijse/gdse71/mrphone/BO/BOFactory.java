@@ -21,8 +21,6 @@ public class BOFactory {
                 return new CustomerBOimpl();
                 case ITEM:
                     return new ItemBOImpl();
-                    case ITEMDETAIL:
-                        return new ItemDetailBOImpl();
                         case EMPLOYEE:
                             return new EmployeeBOimpl();
                             case REPAIR:
@@ -33,8 +31,6 @@ public class BOFactory {
                                         return new PayementBOImpl();
                                         case SUPPLIER:
                                             return new SupplierBOImpl();
-                                            case SUPPLIERDETAIL:
-                                                return new SupplierDetailBOImpl();
                                                 case ORDERS:
                                                     return new OrdersBOImpl();
             default:

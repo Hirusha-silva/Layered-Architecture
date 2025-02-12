@@ -5,6 +5,6 @@ import lk.ijse.gdse71.mrphone.dto.SupplierAndSupplierDetailDto;
 import lk.ijse.gdse71.mrphone.entity.SupplierAndSupplierDetail;
 import lk.ijse.gdse71.mrphone.entity.SupplierDetail;
 
-public interface SupplierDetailDAO extends CrudDAO<SupplierAndSupplierDetail> {
+public interface SupplierDetailDAO extends CrudDAO<SupplierDetail> {
 
 }
