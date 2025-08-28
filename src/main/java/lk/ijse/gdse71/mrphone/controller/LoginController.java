@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.gdse71.mrphone.BO.custom.LoginBO;
+import lk.ijse.gdse71.mrphone.BO.custom.impl.LoginBOImpl;
 import lk.ijse.gdse71.mrphone.db.DBConnection;
 
 import java.io.IOException;
@@ -22,18 +24,14 @@ public class LoginController {
     public Button btnLogin;
     public Hyperlink hyperRegister;
 
+    private final LoginBO loginBO = new LoginBOImpl();
+
     public void btnLogInAction(ActionEvent actionEvent) throws IOException {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
 
         if (isValid()){
-            try {
-                cheakCredintial(username,password);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException | IOException e) {
-                throw new RuntimeException(e);
-            }
+            checkCredential(username,password);
         }
     }
     private boolean isValid() {
@@ -45,24 +43,20 @@ public class LoginController {
     }
 
 
-    public void cheakCredintial (String user_name, String password) throws SQLException, ClassNotFoundException, IOException {
-        String sql = "SELECT user_id,password FROM User WHERE user_id = ?";
-        Connection connection = DBConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setObject(1,user_name);
-
-        ResultSet rst = pstm.executeQuery();
-        if (rst.next()){
-            String dbpw = rst.getString("password");
-            if (password.equals(dbpw)){
+    public void checkCredential(String userName, String password) {
+        try {
+            boolean isValid = loginBO.checkCredential(userName, password);
+            if (isValid) {
                 navigateToCustomer();
-            }else {
-                new Alert(Alert.AlertType.ERROR,"Wrong Password").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Invalid Username or Password!").show();
             }
-        }else {
-            new Alert(Alert.AlertType.ERROR,"User not found").show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
     }
+
 
     private void navigateToCustomer() throws IOException{
         AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/dashboard-form.fxml"));
