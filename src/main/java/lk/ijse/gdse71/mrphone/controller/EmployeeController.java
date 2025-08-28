@@ -120,7 +120,6 @@ public class EmployeeController {
             return;
         }
 
-       // EmployeeDto employeeDto = new EmployeeDto(employeeId,name,phone_no,address);
         try {
             boolean isSaved = employeeBO.save(new EmployeeDto(employeeId,name,phone_no,address));
             if (isSaved) {
@@ -149,7 +148,6 @@ public class EmployeeController {
             return;
         }
 
-       // EmployeeDto employeeDto = new EmployeeDto(employee_id, name, phone_no, address);
         boolean isUpdate = employeeBO.update(new EmployeeDto(employee_id,name,phone_no,address));
         if (isUpdate) {
             refreshPage();
@@ -167,13 +165,6 @@ public class EmployeeController {
             txtName.setText(employeeTm.getName());
             txtPhone.setText(employeeTm.getPhone_no());
             txtAddress.setText(employeeTm.getAddress());
-
-
-//            btnSave.setDisable(true);
-//            btnUpdate.setDisable(false);
-//            btnDelete.setDisable(false);
-//            btnMail.setDisable(false);
-
         }
     }
     public void initialize() throws SQLException, ClassNotFoundException {

@@ -67,6 +67,12 @@ public class LoginController {
         primaryStage.show();
     }
 
-    public void hyperRegisterOnAction(ActionEvent actionEvent) {
+    public void hyperRegisterOnAction(ActionEvent actionEvent) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/register.fxml"));
+        Scene scene = new Scene(anchorPane);
+        Stage primaryStage = (Stage) rootNode.getScene().getWindow();
+        primaryStage.setScene(scene);
+        primaryStage.centerOnScreen();
+        primaryStage.show();
     }
 }
